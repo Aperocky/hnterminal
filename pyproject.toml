@@ -1,12 +1,15 @@
 [project]
 name = "hnterminal"
-version = "0.0.1"
+version = "0.0.2"
 description = "An terminal CLI env for Hacker News"
 readme = "README.md"
 license = {text = "MIT"}
 keywords = ["hacker news", "cli", "repl"]
 authors = [
   {name = "Rocky Li", email = "aperocky@gmail.com" }
+]
+dependencies = [
+    "replbuilder"
 ]
 
 [project.urls]
