@@ -9,6 +9,7 @@ def build_cli():
     hn_context = HNContext()
     cli_runner = ReplRunner("hnterminal", hn_context)
     cli_runner.add_commands([get_front_page_command, get_story_command, get_comments_command], namespace="Read")
+    cli_runner.add_commands(hn_context.get_context_commands(), namespace="Cache")
     return cli_runner
 
 

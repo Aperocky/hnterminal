@@ -1,6 +1,6 @@
 [project]
 name = "hnterminal"
-version = "0.0.2"
+version = "0.1.0"
 description = "An terminal CLI env for Hacker News"
 readme = "README.md"
 license = {text = "MIT"}
