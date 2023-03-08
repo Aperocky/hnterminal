@@ -38,28 +38,23 @@ POINTER| AUTHOR                   | SCORE | COMMENT | AGE        | BASE URL
 5      | The decline of net neutrality activism
        | neelc                    | 27    | 9       | 2 hours    | neelc.org
 
-hnterminal > get_comments 5
+hnterminal > get_comments 2
 PARENT STORY
-The decline of net neutrality activism
-2023-03-07 18:26:57
-AUTHOR: neelc
-FULL URL: https://neelc.org/posts/net-neutrality-activism/
+Hardware microphone disconnect (2021)
+2023-03-07 10:28:29
+AUTHOR: janniks
+FULL URL: https://support.apple.com/guide/security/hardware-microphone-disconnect-secbbd20b00b/web
 POINTER/AUTHOR      | COMMENTS
-1                   | I feel like the USA is focusing on the wrong thing with net neutrality.
-p1necone            | The core problem is that individual ISPs have total monopolies on
-                    | infrastructure (or at least on the better infrastructure) in a lot of
-                    | areas, and so can do all the anti consumer bullshit they want without
-                    | repercussions.
-                    | Enforcing net neutrality is just treating a symptom of the monopoly.
-                    | Other countries fix this by having the shared physical infrastructure
-                    | controlled by a government entity that rents access to any company that
-                    | wants to sell service as an ISP.
+1                   | They have this feature but closing the lid on a MacBook or even putting
+lovehashbrowns      | it to sleep allows Bluetooth devices to stay connected. Heck, a MacBook
+                    | even while in sleep mode will connect to Bluetooth devices. As far as I
+                    | can see, this requires a third-party app to fix. Can an application
+                    | still use the microphone on a Bluetooth device that’s connected?
 
-2                         | I’d advise not saying “the USA” in conversations like this, but
-Uehreka                   | being more specific and saying “US activists” or “US policymakers”.
-                          | The former are probably who you are referring to, the latter are
-                          | who people are generally referring to when they say “the USA” in
-                          | international policy discussions, but US policymakers are deeply
-                          | divided on this issue and most either don’t have a strong opinion
-                          | or are actually against net neutrality.
+2                         | This has to be the most annoying thing in MacOS. My laptop, soundly
+dvirsky                   | sleeping in my backpack, takes over my bluetooth headphones all the
+                          | time.
+
+3                               | Similarly, whenever I'm working at my kitchen table I always
+cj                              | "lose" my mouse as if there's another monitor connected.
 ... more ...

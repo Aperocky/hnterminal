@@ -25,21 +25,3 @@ class HNClient:
         request_url = HNClient.HN_FIREBASE_URL + "item/{}.json".format(item_id)
         item_info = json.loads(request.urlopen(request_url).read())
         return item_info
-
-    def get_comment_tree(self, item_id, results={}, breadth=5, depth=5, limit=100, level=0):
-        # DFS Search 
-        # breadth: search only $breadth top rated direct comments
-        # depth: search only $depth level commands
-        # limit: only retrieve $limit commands
-        print("loading comments with {} breadth, {} depth, and {} limit".format(breadth, depth, limit))
-        if level > depth:
-            return # Avoid back and forth comment chains
-        item = self.get_item(item_id)
-        if item["type"] == "comment":
-            print(".", end="")
-            results[item_id] = item
-        if len(results) >= limit:
-            return
-        for kid_id in item["kids"][:breadth]:
-            self.get_comment_tree(kid_id, breadth, limit, results, level+1)
-
