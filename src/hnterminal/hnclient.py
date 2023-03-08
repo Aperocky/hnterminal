@@ -25,3 +25,9 @@ class HNClient:
         request_url = HNClient.HN_FIREBASE_URL + "item/{}.json".format(item_id)
         item_info = json.loads(request.urlopen(request_url).read())
         return item_info
+
+    def get_author(self, author_name):
+        request_url = HNClient.HN_FIREBASE_URL + "user/{}.json".format(author_name)
+        author_info = json.loads(request.urlopen(request_url).read())
+        return author_info
+

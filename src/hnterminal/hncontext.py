@@ -23,6 +23,9 @@ class HNContext:
         item = self.client.get_item(item_id)
         self.loaded_items[item_id] = item
 
+    def get_author_info(self, author_name):
+        return self.client.get_author(author_name)
+
     def store_pointer(self, index, item_id):
         self.current_pointers[index] = item_id
 
@@ -32,10 +35,12 @@ class HNContext:
     def get_cache(self, args):
         print("LOADED ITEMS COUNT : {}".format(len(self.loaded_items)))
         print("TOTAL HN API CALLS : {}".format(self.call_count))
+        print("POINTERS COUNT     : {}".format(len(self.current_pointers)))
 
     def clear_cache(self, args):
         self.loaded_items = {}
         self.call_count = 0
+        self.current_pointers = {}
 
     def get_context_commands(self):
         return [

@@ -6,6 +6,8 @@ import html
 
 def print_text(text):
     text = html.unescape(text)
+    text = text.replace("<i>", "\033[3m")
+    text = text.replace("</i>", "\033[0m")
     lines = text.split("<p>")
     for line in lines:
         print(line)
@@ -44,4 +46,4 @@ def get_story(args, context):
     print_story(story)
 
 
-get_story_command = ReplCommand("get_story", get_story_parser(), get_story, "Get story by pointer shown", use_context=True)
+get_story_command = ReplCommand("get_story", get_story_parser(), get_story, "Get story by pointer shown, use get_comments instead if you also want to see comments", use_context=True)
