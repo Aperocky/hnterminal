@@ -2,6 +2,7 @@ import argparse
 import os
 import html
 import textwrap
+from time import strftime, localtime
 from replbuilder import ReplCommand
 from .get_story import print_story
 
@@ -29,10 +30,21 @@ def get_comments(args, context):
     item = context.loaded_items[item_id]
     if item["type"] == "comment":
         level = 0
+        parent_id = item["parent"]
+        context.store_item(parent_id)
+        parent_item = context.loaded_items[parent_id]
+        context.store_pointer(-1, parent_id)
+        if parent_item["type"] == "comment":
+            print("\033[1;32mPARENT COMMENT\033[0m")
+            print_comment(-1, 0, parent_item)
+        else:
+            print("\033[1;33mPOINTER -1: \033[1;32mPARENT STORY\033[0m")
+            print_story(parent_item)
     else:
         level = -1
-        print("\033[1;32mPARENT STORY\033[0m")
+        print("\033[1;33mPOINTER -1: \033[1;32mPARENT STORY\033[0m")
         print_story(item)
+        context.store_pointer(-1, item_id)
     print("\033[1;32m{pointer: <19} | {text}\033[0m".format(pointer="POINTER/AUTHOR", text="COMMENTS"))
     get_comment_tree(context, item_id, args.breadth, args.depth, args.limit, level)
 
@@ -52,10 +64,12 @@ def print_comment(pointer, level, item):
     comment_lines = [l for subl in comment_lines_lines for l in subl]
     while len(comment_lines) < 3:
         comment_lines.append("")
+    comment_time = strftime('%Y-%m-%d %H:%M:%S', localtime(item["time"]))
     pad = 19 + level * 6
     print("\033[1;33m{pointer: <{pad}}\033[0m | {text}".format(pointer=pointer, pad=pad, text=comment_lines[0]))
     print("\033[1;36m{author: <{pad}}\033[0m | {text}".format(author=item["by"], pad=pad, text=comment_lines[1]))
-    for line in comment_lines[2:]:
+    print("{time: <{pad}} | {text}".format(time=comment_time, pad=pad, text=comment_lines[2]))
+    for line in comment_lines[3:]:
         print(" "*(pad+1) + "| " + line)
     print()
 
@@ -78,4 +92,4 @@ def get_comment_tree(context, item_id, breadth=5, depth=5, limit=100, level=0):
             get_comment_tree(context, kid_id, breadth, depth, limit, level+1)
 
 
-get_comments_command = ReplCommand("get_comments", get_comment_parser(), get_comments, "Get comments by pointer, works with both stories and comments", use_context=True)
+get_comments_command = ReplCommand("get_comments", get_comment_parser(), get_comments, "Get comments by pointer, works with both stories and comments, uses DFS to construct a comment tree, control the recusion parameters with breadth, depth and limit arguments", use_context=True)
