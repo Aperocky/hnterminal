@@ -3,12 +3,13 @@ import os
 import html
 import textwrap
 from replbuilder import ReplCommand
+from .get_story import print_story
 
 
 def get_comment_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--pointer', type=int, help="Get the comment belonging to previous listed pointer")
-    parser.add_argument('-i', '--item-id', type=int, help="Get the comment child of specific item id, you're responsible for finding the id yourself")
+    parser.add_argument('pointer', nargs="?", type=int, help="Get the comment belonging to previous listed pointer")
+    parser.add_argument('-i', '--item-id', type=int, help="Get the comment child of specific item id, this must be provided in lieu of pointer")
     parser.add_argument('-b', '--breadth', type=int, default=5, help="How many direct replies to get for each level")
     parser.add_argument('-d', '--depth', type=int, default=5, help="Max depth of comment chain traversed")
     parser.add_argument('-l', '--limit', type=int, default=100, help="Max number of comments retrieved")
@@ -30,6 +31,8 @@ def get_comments(args, context):
         level = 0
     else:
         level = -1
+        print("\033[1;32mPARENT STORY\033[0m")
+        print_story(item)
     print("\033[1;32m{pointer: <19} | {text}\033[0m".format(pointer="POINTER/AUTHOR", text="COMMENTS"))
     get_comment_tree(context, item_id, args.breadth, args.depth, args.limit, level)
 
@@ -39,13 +42,15 @@ def print_comment(pointer, level, item):
         return
     comment = item["text"]
     comment = html.unescape(comment)
+    comment = comment.replace("<i>", "\033[3m")
+    comment = comment.replace("</i>", "\033[0m")
     comment_lines = comment.split("<p>")
     term_width = os.get_terminal_size().columns
     text_width = term_width - 30 - level * 5
 
     comment_lines_lines = [textwrap.wrap(l, text_width) for l in comment_lines]
     comment_lines = [l for subl in comment_lines_lines for l in subl]
-    if len(comment_lines) < 2:
+    while len(comment_lines) < 3:
         comment_lines.append("")
     pad = 19 + level * 6
     print("\033[1;33m{pointer: <{pad}}\033[0m | {text}".format(pointer=pointer, pad=pad, text=comment_lines[0]))
