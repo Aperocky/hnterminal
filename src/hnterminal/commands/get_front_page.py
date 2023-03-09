@@ -27,8 +27,8 @@ def get_age_str(timestamp):
 def get_front_page_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--type', type=str, default="TOP", help="HN Story types, default to TOP, also try ASK, NEW, SHOW, JOB")
-    parser.add_argument('-s', '--start-index', type=int, default=0, help="Start from index, if provided, overrides the page argument")
-    parser.add_argument('-n', '--number', type=int, default=30, help="Get these number of stories, default to 30")
+    parser.add_argument('-s', '--start-index', type=int, default=0, help="Start from index, default to 0")
+    parser.add_argument('-n', '--number', type=int, default=30, help="Get n number of stories, default to 30")
     return parser
 
 

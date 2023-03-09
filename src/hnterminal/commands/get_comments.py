@@ -9,11 +9,11 @@ from .get_story import print_story
 
 def get_comment_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('pointer', nargs="?", type=int, help="Get the comment belonging to previous listed pointer")
-    parser.add_argument('-i', '--item-id', type=int, help="Get the comment child of specific item id, this must be provided in lieu of pointer")
+    parser.add_argument('pointer', nargs="?", type=int, help="Get comments tree under previous listed pointer")
     parser.add_argument('-b', '--breadth', type=int, default=5, help="How many direct replies to get for each level")
     parser.add_argument('-d', '--depth', type=int, default=5, help="Max depth of comment chain traversed")
     parser.add_argument('-l', '--limit', type=int, default=100, help="Max number of comments retrieved")
+    parser.add_argument('-i', '--item-id', type=int, help="Get comments tree under a specific item-id. must be provided if pointer isn't")
     return parser
 
 
