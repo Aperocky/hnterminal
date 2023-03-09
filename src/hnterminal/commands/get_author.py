@@ -1,6 +1,7 @@
 import argparse
 import textwrap
 import html
+import os
 from time import strftime, localtime
 from replbuilder import ReplCommand
 from .get_comments import print_comment
