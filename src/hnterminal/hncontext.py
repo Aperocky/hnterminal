@@ -21,6 +21,8 @@ class HNContext:
             return
         self.call_count += 1
         item = self.client.get_item(item_id)
+        if item is None:
+            raise ValueError("Provided id does not exist")
         self.loaded_items[item_id] = item
 
     def get_author_info(self, author_name):

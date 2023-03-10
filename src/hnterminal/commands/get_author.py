@@ -61,6 +61,8 @@ def get_author(args, context):
     else:
         author_name = args.author_name
     author_info = context.get_author_info(author_name)
+    if author_info is None:
+        raise ValueError("Provided author_name does not exist")
     print("\033[1;36mUSER: {}\033[0m".format(author_name))
     if "about" in author_info:
         print_about(author_info["about"])
