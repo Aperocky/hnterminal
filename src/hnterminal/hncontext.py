@@ -7,6 +7,12 @@ class HNContext:
 
     HN_BASE_URL = "https://news.ycombinator.com/"
 
+    @staticmethod
+    def get_link_parser():
+        parser = argparse.ArgumentParser()
+        parser.add_argument("pointer", nargs="?", type=int, help="Get link by pointer")
+        return parser
+
     def __init__(self):
         self.client = HNClient()
         self.current_pointers = {}
@@ -35,7 +41,11 @@ class HNContext:
         self.link = link
 
     def get_link(self, args):
-        if self.link is None:
+        if args.pointer:
+            item_id = self.current_pointers[args.pointer]
+            sub_link = "item?id={}".format(item_id)
+            print("\033[4;35m{}\033[0m".format(HNContext.HN_BASE_URL + sub_link))
+        elif self.link is None:
             print("No link stored yet")
         else:
             print("\033[4;35m{}\033[0m".format(HNContext.HN_BASE_URL + self.link))
@@ -58,7 +68,7 @@ class HNContext:
 
     def get_context_commands(self):
         return [
-            ReplCommand("get_link", argparse.ArgumentParser(), self.get_link, "Get the browser link from last command"),
+            ReplCommand("get_link", HNContext.get_link_parser(), self.get_link, "Get the browser link from pointers or from last command"),
             ReplCommand("get_cache", argparse.ArgumentParser(), self.get_cache, "See stored item count and call count"),
             ReplCommand("clear_cache", argparse.ArgumentParser(), self.clear_cache, "Remove all cache"),
         ]
