@@ -129,23 +129,55 @@ dvngnt_                         | product
 ... more output omitted ...
 
 
-hnterminal > get_user 1 -sn 3
-USER: mariorojas
-Back-end Developer. Morelia, Mexico.
+hnterminal > get_user -u Aperocky -sn 3
+USER: Aperocky
+Human OS stuck inside protein turing? machine, would love to acquire cross platform capability.
 
-TOTAL SUBMITS : 26
-KARMA         : 7
+TOTAL SUBMITS : 2084
+KARMA         : 4729
 DISPLAYING RECENT SUBMISSIONS
 POINTER/AUTHOR      | STORY/COMMENTS
-1                   | interesting SaaS. now, you have any plan in case you go out of business?
-mariorojas          |
-2023-03-08 23:22:37 |
 
-2                   | interesting but I feel like the app does nothing different than the
-mariorojas          | WhatsApp emoji search, anyway I appreciate the AI integration
-2023-02-03 17:05:03 |
+1                   | DELETED
 
-3                   | honestly I couldn't find the real use of it at the first sight, but I
-mariorojas          | really liked the minimalistic UI design
-2023-01-31 11:58:12 |
+2                   | > Professional developers will recognize that we're talking 50-90% of
+Aperocky            | the LABOR-HOURS
+2023-03-19 11:20:02 | More like 20-30% at max. And it's not including debugging the output of
+                    | chatGPT, which I've found that it has been making subtle mistakes -
+                    | which will probably take away all of the time gained.
+                    | Writing code isn't the biggest time sink, figuring out what to write is.
+
+3                   | This is my feeling as well. For some reason online community feels more
+Aperocky            | "trustable" in the early 2000s. That is definitely NOT true today.
+2023-03-17 23:40:32 |
+
+
+hnterminal > get_link
+https://news.ycombinator.com/user?id=Aperocky
+
+hnterminal > get_comments 3
+PARENT COMMENT
+-1                  | Overall things are much safer, but contact by scammers online (online
+dataqat             | scams in general) is much more a thing now than it was then. There was a
+2023-03-17 17:57:14 | turning point in the mid-late aughts for me where the level of
+                    | trustworthiness of random anonymous online contacts took a dive.
+
+POINTER/AUTHOR      | COMMENTS
+1                   | This is my feeling as well. For some reason online community feels more
+Aperocky            | "trustable" in the early 2000s. That is definitely NOT true today.
+2023-03-17 23:40:32 |
+
+2                         | What's funny about this is at the time I most trusted my online
+uncletaco                 | friends people who weren't terminally online felt much more vocal
+2023-03-18 04:12:13       | about online predators and scammers. Now that everyone is
+                          | terminally online they don't seem to be as worried.
+
+
+hnterminal > get_link
+https://news.ycombinator.com/item?id=35205816
+
+hnterminal > get_user 2
+USER: uncletaco
+TOTAL SUBMITS : 388
+KARMA         : 948
 ```
