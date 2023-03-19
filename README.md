@@ -12,7 +12,7 @@ TODO: Add login, reply and other `write` level activities
 
 `pip install hnterminal`
 
-If your `PATH` include pip installation, `$ hnterminal` should invoke the terminal command from shell.
+`$ hnterminal` will invoke the terminal command from shell, if pip installation is in your `PATH`
 
 You may also run `python src/cli.py` off current repository.
 
