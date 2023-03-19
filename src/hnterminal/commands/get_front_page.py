@@ -52,6 +52,8 @@ def get_front_page(args, context):
     context.clear_pointers()
     context.get_story_list(args.type)
     stories_of_interest = context.story_list[args.start_index:args.start_index+args.number]
+    sub_link = "" if args.type == "TOP" else args.type.lower()
+    context.store_link(sub_link)
 
     width = os.get_terminal_size().columns
     if width >= 155:

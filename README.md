@@ -22,7 +22,7 @@ Getting current front page information for any HN front page categories (`-n` de
 
 ![front page](images/get_front_page.jpg)
 
-Navigate using `POINTER` stored over previous command, `get_comments`, `get_author`, `get_story` all accept pointers:
+Navigate using `POINTER` stored over previous command, `get_comments`, `get_user`, `get_story` all accept pointers:
 
 ![comment pointer](images/get_comments.jpg)
 
@@ -36,11 +36,11 @@ Additionally, `-1` pointer is reserved for parent of comments, so you can trace 
 
 ![parent trace](images/parent_trace.jpg)
 
-parent trace is helpful since you can see user comments via `get_author`
+parent trace is helpful since you can see user comments via `get_user`
 
-`get_author get_comments get_story` also support manual input (in addition to pointers):
+`get_user get_comments get_story` also support manual input (in addition to pointers), you can also utilize `get_link` on any previous commands to get the link to browser:
 
-![dang](images/dang.jpg)
+![aperocky](images/aperocky.jpg)
 
 All story, comments you see are stored in the cache, for instant retrieval. However, each `get_front_page` call would invoke a call to front page to get the most recent list and order.
 
@@ -66,7 +66,7 @@ Read
     get_comments      Get comments by pointer, works with both stories and comments,
                       uses DFS to construct a comment tree, control the recusion
                       parameters with breadth, depth and limit arguments
-    get_author        Get the author by pointer or name, can also show recent
+    get_user        Get the author by pointer or name, can also show recent
                       submissions
 Cache
     get_cache         See stored item count and call count
@@ -129,7 +129,7 @@ dvngnt_                         | product
 ... more output omitted ...
 
 
-hnterminal > get_author 1 -sn 3
+hnterminal > get_user 1 -sn 3
 USER: mariorojas
 Back-end Developer. Morelia, Mexico.
 

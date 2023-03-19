@@ -3,7 +3,7 @@ from hnterminal.hncontext import HNContext
 from hnterminal.commands.get_front_page import get_front_page_command
 from hnterminal.commands.get_story import get_story_command
 from hnterminal.commands.get_comments import get_comments_command
-from hnterminal.commands.get_author import get_author_command
+from hnterminal.commands.get_user import get_user_command
 
 
 def build_cli():
@@ -13,7 +13,7 @@ def build_cli():
         get_front_page_command,
         get_story_command,
         get_comments_command,
-        get_author_command], namespace="Read")
+        get_user_command], namespace="Read")
     cli_runner.add_commands(hn_context.get_context_commands(), namespace="Cache")
     return cli_runner
 

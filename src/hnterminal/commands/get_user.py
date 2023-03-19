@@ -7,10 +7,10 @@ from replbuilder import ReplCommand
 from .get_comments import print_comment
 
 
-def get_author_parser():
+def get_user_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('pointer', nargs="?", type=int, help="Get the comment belonging to previous listed pointer")
-    parser.add_argument('-a', '--author-name', type=str, help="Get author by name, case sensitive, must be provided if pointer isn't")
+    parser.add_argument('-u', '--user-name', type=str, help="Get user by name, case sensitive, must be provided if pointer isn't")
     parser.add_argument('-s', '--show-submits', action="store_true", help="Show the most recent n submits belonging to this user")
     parser.add_argument('-n', '--number', type=int, default=5, help="Number of submits to show, default to 5")
     return parser
@@ -50,28 +50,29 @@ def print_story_with_pointer(pointer, story):
     print()
 
 
-def get_author(args, context):
-    if not args.pointer and not args.author_name:
+def get_user(args, context):
+    if not args.pointer and not args.user_name:
         raise ValueError("Must either provide --pointer or --item-id")
     if args.pointer:
         item_id = context.current_pointers[args.pointer]
         context.store_item(item_id)
         item = context.loaded_items[item_id]
-        author_name = item["by"]
+        user_name = item["by"]
     else:
-        author_name = args.author_name
-    author_info = context.get_author_info(author_name)
-    if author_info is None:
-        raise ValueError("Provided author_name does not exist")
-    print("\033[1;36mUSER: {}\033[0m".format(author_name))
-    if "about" in author_info:
-        print_about(author_info["about"])
-    print("TOTAL SUBMITS : {}".format(len(author_info["submitted"])))
-    print("KARMA         : {}".format(author_info["karma"]))
+        user_name = args.user_name
+    user_info = context.get_user_info(user_name)
+    if user_info is None:
+        raise ValueError("Provided user_name does not exist")
+    context.store_link("user?id={}".format(user_name))
+    print("\033[1;36mUSER: {}\033[0m".format(user_name))
+    if "about" in user_info:
+        print_about(user_info["about"])
+    print("TOTAL SUBMITS : {}".format(len(user_info["submitted"])))
+    print("KARMA         : {}".format(user_info["karma"]))
     if args.show_submits:
         print("\033[1;32mDISPLAYING RECENT SUBMISSIONS\033[0m")
         print("\033[1;32m{pointer: <19} | {text}\033[0m".format(pointer="POINTER/AUTHOR", text="STORY/COMMENTS"))
-        recent_items = author_info["submitted"][:args.number]
+        recent_items = user_info["submitted"][:args.number]
         context.clear_pointers()
         pointer = 0
         for item_id in recent_items:
@@ -90,4 +91,4 @@ def get_author(args, context):
                 print_story_with_pointer(pointer, item)
 
 
-get_author_command = ReplCommand("get_author", get_author_parser(), get_author, "Get the author by pointer or name, can also show recent submissions", use_context=True)
+get_user_command = ReplCommand("get_user", get_user_parser(), get_user, "Get the user by pointer or name, can also show recent submissions", use_context=True)

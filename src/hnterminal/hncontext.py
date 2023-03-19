@@ -5,12 +5,15 @@ from replbuilder import ReplCommand
 
 class HNContext:
 
+    HN_BASE_URL = "https://news.ycombinator.com/"
+
     def __init__(self):
         self.client = HNClient()
         self.current_pointers = {}
         self.story_list = []
         self.loaded_items = {}
         self.call_count = 0
+        self.link = None
 
     def get_story_list(self, story_type="TOP"):
         self.call_count += 1
@@ -25,8 +28,17 @@ class HNContext:
             raise ValueError("Provided id does not exist")
         self.loaded_items[item_id] = item
 
-    def get_author_info(self, author_name):
-        return self.client.get_author(author_name)
+    def get_user_info(self, author_name):
+        return self.client.get_user(author_name)
+
+    def store_link(self, link):
+        self.link = link
+
+    def get_link(self, args):
+        if self.link is None:
+            print("No link stored yet")
+        else:
+            print("\033[4;35m{}\033[0m".format(HNContext.HN_BASE_URL + self.link))
 
     def store_pointer(self, index, item_id):
         self.current_pointers[index] = item_id
@@ -46,6 +58,7 @@ class HNContext:
 
     def get_context_commands(self):
         return [
+            ReplCommand("get_link", argparse.ArgumentParser(), self.get_link, "Get the browser link from last command"),
             ReplCommand("get_cache", argparse.ArgumentParser(), self.get_cache, "See stored item count and call count"),
             ReplCommand("clear_cache", argparse.ArgumentParser(), self.clear_cache, "Remove all cache"),
         ]

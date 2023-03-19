@@ -43,6 +43,7 @@ def get_story(args, context):
     story = context.loaded_items[story_id]
     if story["type"] != "story":
         raise ValueError("Provided pointer or id is not a story")
+    context.store_link("item?id={}".format(story_id))
     print_story(story)
 
 

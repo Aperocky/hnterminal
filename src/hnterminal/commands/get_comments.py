@@ -27,6 +27,7 @@ def get_comments(args, context):
     context.clear_pointers()
     context.curr_pointer = 1
     context.store_item(item_id)
+    context.store_link("item?id={}".format(item_id))
     item = context.loaded_items[item_id]
     if item["type"] == "comment":
         level = 0
