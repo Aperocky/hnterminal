@@ -5,6 +5,7 @@ import textwrap
 from time import strftime, localtime
 from replbuilder import ReplCommand
 from .get_story import print_story
+from .votes import get_vote_stamp
 
 
 def get_comment_parser():
@@ -26,9 +27,13 @@ def get_comments(args, context):
         raise ValueError("Must either provide --pointer or --item-id")
     context.clear_pointers()
     context.curr_pointer = 1
+    context.drop_item(item_id) # Reload parent object each time.
     context.store_item(item_id)
     context.store_link("item?id={}".format(item_id))
     item = context.loaded_items[item_id]
+    vote = None
+    if item_id in context.stored_votes:
+        vote = context.stored_votes[item_id]
     if item["type"] == "comment":
         level = 0
         parent_id = item["parent"]
@@ -37,20 +42,20 @@ def get_comments(args, context):
         context.store_pointer(-1, parent_id)
         if parent_item["type"] == "comment":
             print("\033[1;32mPARENT COMMENT\033[0m")
-            print_comment(-1, 0, parent_item)
+            print_comment(-1, 0, parent_item, vote)
         else:
             print("\033[1;33mPOINTER -1: \033[1;32mPARENT STORY\033[0m")
-            print_story(parent_item)
+            print_story(parent_item, vote)
     else:
         level = -1
         print("\033[1;33mPOINTER -1: \033[1;32mPARENT STORY\033[0m")
-        print_story(item)
+        print_story(item, vote)
         context.store_pointer(-1, item_id)
     print("\033[1;32m{pointer: <19} | {text}\033[0m".format(pointer="POINTER/AUTHOR", text="COMMENTS"))
     get_comment_tree(context, item_id, args.breadth, args.depth, args.limit, level)
 
 
-def print_comment(pointer, level, item):
+def print_comment(pointer, level, item, vote=None):
     if "text" not in item:
         return
     comment = item["text"]
@@ -67,7 +72,11 @@ def print_comment(pointer, level, item):
         comment_lines.append("")
     comment_time = strftime('%Y-%m-%d %H:%M:%S', localtime(item["time"]))
     pad = 19 + level * 6
-    print("\033[1;33m{pointer: <{pad}}\033[0m | {text}".format(pointer=pointer, pad=pad, text=comment_lines[0]))
+    big_pad = pad
+    if vote:
+        pointer = "{} {}".format(pointer, get_vote_stamp(vote))
+        big_pad += 11
+    print("\033[1;33m{pointer: <{pad}}\033[0m | {text}".format(pointer=pointer, pad=big_pad, text=comment_lines[0]))
     print("\033[1;36m{author: <{pad}}\033[0m | {text}".format(author=item["by"], pad=pad, text=comment_lines[1]))
     print("{time: <{pad}} | {text}".format(time=comment_time, pad=pad, text=comment_lines[2]))
     for line in comment_lines[3:]:
@@ -85,7 +94,10 @@ def get_comment_tree(context, item_id, breadth=5, depth=5, limit=100, level=0):
     context.store_item(item_id)
     item = context.loaded_items[item_id]
     if item["type"] == "comment":
-        print_comment(context.curr_pointer, level, item)
+        vote = None
+        if item_id in context.stored_votes:
+            vote = context.stored_votes[item_id]
+        print_comment(context.curr_pointer, level, item, vote)
         context.store_pointer(context.curr_pointer, item_id)
         context.curr_pointer += 1
     if "kids" in item:

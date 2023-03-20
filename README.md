@@ -2,11 +2,11 @@
 
 `pip install hnterminal`
 
-HN browser in terminal.
+HN browser in terminal, supports browsing, login, upvote and comment reply.
+
+Supports editing of comments in editor such as vim.
 
 Built on top of [HN API](https://github.com/HackerNews/API) and [replbuilder](https://github.com/Aperocky/replbuilder)
-
-TODO: Add login, reply and other `write` level activities
 
 ## Installation
 
@@ -49,6 +49,8 @@ All story, comments you see are stored in the cache, for instant retrieval. Howe
 Help and direction is readily available for every command as this package depends on [replbuilder](https://github.com/Aperocky/replbuilder):
 
 ![help](images/get_help.jpg)
+
+Login, Upvote, and comment reply functionalities are in, will expand usage section after they are thoroughly tested.
 
 ## Usage (No Image)
 

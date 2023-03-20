@@ -17,9 +17,11 @@ class HNContext:
         self.client = HNClient()
         self.current_pointers = {}
         self.story_list = []
+        self.stored_votes = {}
         self.loaded_items = {}
         self.call_count = 0
         self.link = None
+        self.user_cookie = None
 
     def get_story_list(self, story_type="TOP"):
         self.call_count += 1
@@ -34,11 +36,22 @@ class HNContext:
             raise ValueError("Provided id does not exist")
         self.loaded_items[item_id] = item
 
+    def drop_item(self, item_id):
+        if item_id in self.loaded_items:
+            self.loaded_items.pop(item_id)
+
     def get_user_info(self, author_name):
         return self.client.get_user(author_name)
 
     def store_link(self, link):
         self.link = link
+
+    def store_vote(self, item_id, vote_type):
+        if vote_type == "un":
+            if item_id in self.stored_votes:
+                self.stored_votes.pop(item_id)
+            return
+        self.stored_votes[item_id] = vote_type
 
     def get_link(self, args):
         if args.pointer:
@@ -60,11 +73,16 @@ class HNContext:
         print("LOADED ITEMS COUNT : {}".format(len(self.loaded_items)))
         print("TOTAL HN API CALLS : {}".format(self.call_count))
         print("POINTERS COUNT     : {}".format(len(self.current_pointers)))
+        print("STORED VOTES       : {}".format(len(self.stored_votes)))
 
     def clear_cache(self, args):
         self.loaded_items = {}
-        self.call_count = 0
         self.current_pointers = {}
+        # stored votes remain true, no need to update
+        # call count will continue to increment
+
+    def store_user_cookie(self, user_cookie):
+        self.user_cookie = user_cookie
 
     def get_context_commands(self):
         return [

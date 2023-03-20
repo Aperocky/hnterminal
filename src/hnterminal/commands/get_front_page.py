@@ -4,13 +4,15 @@ from replbuilder import ReplCommand
 from urllib.parse import urlsplit
 from time import strftime, localtime
 from datetime import datetime
+from .votes import get_vote_stamp
 
 
-HN_LINER_SHORT_TOP = "\033[1;33m{rank: <7}| {title}\033[0m"
-HN_LINER_SHORT_BOTTOM = "{rank: <7}| \033[0;36m{author: <24}\033[0m | {score: <5} | {comment: <7} | {age: <10} | {base_url}"
-HN_LINER_SHORT_TITLE = "\033[1;32m{rank: <7}| {author: <24} | {score: <5} | {comment: <7} | {age: <10} | {base_url}\033[0m"
-HN_STORY_LINER = "\033[1;33m{rank: <7}\033[0m| {title: <80} | {score: <5} | {comment: <7} | {age: <10} | {author: <20} | {base_url}"
-HN_STORY_TITLE = "\033[1;32m{rank: <7}| {title: <80} | {score: <5} | {comment: <7} | {age: <10} | {author: <20} | {base_url}\033[0m"
+HN_LINER_SHORT_TOP = "\033[1;33m{rank: <7} | {title}\033[0m"
+HN_LINER_SHORT_BOTTOM = "{rank: <7} | \033[0;36m{author: <24}\033[0m | {score: <5} | {comment: <7} | {age: <10} | {base_url}"
+HN_LINER_SHORT_TITLE = "\033[1;32m{rank: <7} | {author: <24} | {score: <5} | {comment: <7} | {age: <10} | {base_url}\033[0m"
+HN_STORY_LINER = "\033[1;33m{rank: <7}\033[0m | {title: <80} | {score: <5} | {comment: <7} | {age: <10} | {author: <20} | {base_url}"
+HN_STORY_LINER_VOTED = "\033[1;33m{rank: <7}\033[0m | {title: <91} | {score: <5} | {comment: <7} | {age: <10} | {author: <20} | {base_url}"
+HN_STORY_TITLE = "\033[1;32m{rank: <7} | {title: <80} | {score: <5} | {comment: <7} | {age: <10} | {author: <20} | {base_url}\033[0m"
 
 
 def get_age_str(timestamp):
@@ -32,7 +34,7 @@ def get_front_page_parser():
     return parser
 
 
-def print_story_line(rank, item, width):
+def print_story_line(rank, item, width, vote=None):
     age = get_age_str(item["time"])
     base_url = "NONE"
     if "url" in item:
@@ -41,8 +43,13 @@ def print_story_line(rank, item, width):
     comment = item["descendants"] if "descendants" in item else "N/A"
     author = item["by"]
     title = item["title"]
+    if vote:
+        title = "{} {}".format(title, get_vote_stamp(vote))
     if width >= 155:
-        print(HN_STORY_LINER.format(rank=rank, title=item["title"], score=score, comment=comment, age=age, author=item["by"], base_url=base_url))
+        if vote:
+            print(HN_STORY_LINER_VOTED.format(rank=rank, title=title, score=score, comment=comment, age=age, author=item["by"], base_url=base_url))
+        else:
+            print(HN_STORY_LINER.format(rank=rank, title=title, score=score, comment=comment, age=age, author=item["by"], base_url=base_url))
     else:
         print(HN_LINER_SHORT_TOP.format(rank=rank, title=title))
         print(HN_LINER_SHORT_BOTTOM.format(rank="", author=author, score=score, comment=comment, age=age, base_url=base_url))
@@ -64,7 +71,10 @@ def get_front_page(args, context):
     for story_id in stories_of_interest:
         rank += 1
         context.store_item(story_id)
-        print_story_line(rank, context.loaded_items[story_id], width)
+        vote = None
+        if story_id in context.stored_votes:
+            vote = context.stored_votes[story_id]
+        print_story_line(rank, context.loaded_items[story_id], width, vote)
         context.store_pointer(rank, story_id)
 
 
