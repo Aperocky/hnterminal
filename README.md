@@ -2,7 +2,7 @@
 
 `pip install hnterminal`
 
-This CLI tool supports browsing, login, upvote and comment reply for full HN experience in the terminal.
+This CLI tool supports browsing, login, upvote and commenting for full HN experience in the terminal.
 
 Built on top of [HN API](https://github.com/HackerNews/API) and [replbuilder](https://github.com/Aperocky/replbuilder).
 

@@ -53,4 +53,4 @@ def get_story(args, context):
     print_story(story, vote)
 
 
-get_story_command = ReplCommand("get_story", get_story_parser(), get_story, "Get story by pointer shown, use get_comments instead if you also want to see comments", use_context=True)
+get_story_command = ReplCommand("get_story", get_story_parser(), get_story, "Get story by pointer shown, use get_tree instead if you also want to see comments", use_context=True)
