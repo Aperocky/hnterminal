@@ -1,3 +1,4 @@
+import sys
 import argparse
 from http.client import HTTPSConnection
 from bs4 import BeautifulSoup
@@ -61,6 +62,7 @@ def vote(args, context, vote_type):
     hn_get(vote_path, context.user_cookie)
     context.store_vote(item_id, vote_type)
     print("POINTER {} is {}".format(args.pointer, get_vote_stamp(vote_type)))
+    sys.stdout.flush()
 
 
 def upvote(args, context):

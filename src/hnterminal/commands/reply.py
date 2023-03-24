@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import time
 import html
 import argparse
@@ -52,9 +53,9 @@ def send_reply_form(item_id, text, context, is_story=True):
     }
     if is_story:
         form_data["goto"] = sub_link
-    print(form_data)
     send_comment_request(form_data, context.user_cookie)
     print("\033[0;32mComment Published\033[0m")
+    sys.stdout.flush()
     context.drop_item(item_id) # Parent will need to be reloaded
 
 

@@ -105,4 +105,4 @@ def get_comment_tree(context, item_id, breadth=5, depth=5, limit=100, level=0):
             get_comment_tree(context, kid_id, breadth, depth, limit, level+1)
 
 
-get_comments_command = ReplCommand("get_comments", get_comment_parser(), get_comments, "Get comments by pointer, works with both stories and comments, uses DFS to construct a comment tree, control the recusion parameters with breadth, depth and limit arguments", use_context=True)
+get_tree_command = ReplCommand("get_tree", get_comment_parser(), get_comments, "Get story, comments and their children by pointer, uses DFS to construct a comment tree, you have control over recusion parameters with breadth, depth and limit arguments", use_context=True)
