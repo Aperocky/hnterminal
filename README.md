@@ -18,7 +18,7 @@ You may also run `python src/cli.py` off current repository.
 
 The CLI and each of its command have detailed help sections that you can utilize:
 
-![help](images/help.jpg)
+![help](images/get_help.jpg)
 
 You can quickly navigate the front page:
 
