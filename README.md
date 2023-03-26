@@ -50,6 +50,10 @@ This terminal tool is *responsive!* and the output will be adjusted to the width
 
 ![responsive browsing](images/responsive_term.jpg)
 
+You can also use aliases to shorten most used, repetitive commands:
+
+![alias](images/alias.jpg)
+
 There are more to this tool, for instance, it has the capability to show user info and history, it enables seamless browsing experience by maintaining a cache which status you can check with cache commands, which you may want to clear from time to time to keep it from going stale if you spend hours in this tool. The ultimate goal is to provide the same HN browsing experience in the terminal.
 
 ## Usage (No Image)
