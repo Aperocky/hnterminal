@@ -1,5 +1,7 @@
 # hnterminal
 
+![PyPI version](http://img.shields.io/pypi/v/hnterminal.svg)
+
 `pip install hnterminal`
 
 This CLI tool supports browsing, login, upvote and commenting for full HN experience in the terminal.
