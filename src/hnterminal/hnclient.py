@@ -30,4 +30,3 @@ class HNClient:
         request_url = HNClient.HN_FIREBASE_URL + "user/{}.json".format(author_name)
         author_info = json.loads(request.urlopen(request_url).read())
         return author_info
-

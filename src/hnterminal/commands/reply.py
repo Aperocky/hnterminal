@@ -15,6 +15,10 @@ from .votes import hn_get, get_pointer_parser
 EDITOR = os.environ.get('EDITOR', 'vim')
 
 
+def string_is_empty(s):
+    return bool(re.search("^\s*$", s))
+
+
 def send_comment_request(form_data, user_cookie):
     headers = {"Cookie": user_cookie}
     data = parse.urlencode(form_data).encode()
@@ -36,6 +40,9 @@ def get_reply_parser():
 
 
 def send_reply_form(item_id, text, context, is_story=True):
+    if string_is_empty(text):
+        print("Not publishing empty comment")
+        return
     if is_story:
         sub_link = "item?id={}".format(item_id)
     else:
@@ -67,7 +74,8 @@ def editor_edit(item):
     with tempfile.NamedTemporaryFile(suffix=".tmp") as tf:
         tf.write("YOU ARE REPLYING TO:\n\n".encode())
         tf.write(text.encode())
-        tf.write("\n\n=== draft your reply below this line, do not delete this or above ===\n".encode())
+        tf.write("\n\n=== If you do not want to reply, save and close as is ===".encode())
+        tf.write("\n=== draft your reply below this line, do not delete this line or above ===\n".encode())
         tf.flush()
         call([EDITOR, '+set backupcopy=yes', tf.name])
         edited_message = tf.read()
@@ -82,7 +90,10 @@ def reply_to(args, context):
     item = context.loaded_items[item_id]
     comment_string = ""
     if args.editor:
-        comment_string = editor_edit(item)
+        comment_string = editor_edit(item).decode("utf-8")
+        if string_is_empty(comment_string):
+            print("Did not send comment")
+            return
         print("\033[1;32mEDITOR OUTPUT:\033[0m")
         print(comment_string)
     elif args.comment:

@@ -2,7 +2,7 @@
 
 ![PyPI version](http://img.shields.io/pypi/v/hnterminal.svg)
 
-`pip install hnterminal`
+`pipx install hnterminal`
 
 This CLI tool supports browsing, login, upvote and commenting for full HN experience in the terminal.
 
@@ -10,9 +10,9 @@ Built on top of [HN API](https://github.com/HackerNews/API) and [replbuilder](ht
 
 ## Installation
 
-`pip install hnterminal`
+`pipx install hnterminal`
 
-`$ hnterminal` will invoke the terminal command from shell, if pip installation is in your `PATH`
+`$ hnterminal` will invoke the terminal command from shell, if `pipx` installation is in your `PATH`
 
 You may also run `python src/cli.py` off current repository.
 
