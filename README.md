@@ -16,6 +16,16 @@ Built on top of [HN API](https://github.com/HackerNews/API) and [replbuilder](ht
 
 You may also run `python src/cli.py` off current repository.
 
+## Demo
+
+Use this REPL to browse HackerNews in terminal!
+
+![front_page_demo](images/hnterm-demo-0.gif)
+
+Once you have logged in via `login $USERNAME $PASSWORD`, you can upvote and reply as well:
+
+![logged_in_user](images/hnterm-demo-1.gif)
+
 ## Usage
 
 The CLI and each of its command have detailed help sections that you can utilize:
